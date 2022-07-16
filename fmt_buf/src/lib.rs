@@ -2,7 +2,7 @@
 #![feature(int_log)]
 
 /// This is a very simple buffer to pre format a short line of text
-/// limited arbitrarily to 16 bytes.
+/// limited arbitrarily to 16 bytes/characters => 128 bits.
 pub struct FmtBuf {
     buf: [u8; 16],
     ptr: usize,
@@ -49,13 +49,16 @@ impl From<u16> for FmtBuf {
 impl core::fmt::Write for FmtBuf {
     fn write_str(&mut self, s: &str) -> core::fmt::Result {
         let rest_len = self.buf.len() - self.ptr;
+        
         let len = if rest_len < s.len() {
             rest_len
         } else {
             s.len()
         };
+        
         self.buf[self.ptr..(self.ptr + len)].copy_from_slice(&s.as_bytes()[0..len]);
         self.ptr += len;
+        
         Ok(())
     }
 }
@@ -63,27 +66,14 @@ impl core::fmt::Write for FmtBuf {
 #[test]
 pub fn test_runner() {
     use core::fmt::Write;
-    let num: u16 = 2;
-    let num_buf = FmtBuf::from(num);
-    let mut num_buf2 = FmtBuf::new();
-    write!(num_buf2,"2").unwrap();
-    assert_eq!(num_buf.buf, num_buf2.buf);
 
-    let num: u16 = 9;
-    let num_buf = FmtBuf::from(num);
-    let mut num_buf2 = FmtBuf::new();
-    write!(num_buf2,"9").unwrap();
-    assert_eq!(num_buf.buf, num_buf2.buf);
+    let test_cases: &[(u16, &'static str)] = &[(2, "2"), (9, "9"), (375, "375"), (9999, "9999")];
 
-    let num: u16 = 375;
-    let num_buf = FmtBuf::from(num);
-    let mut num_buf2 = FmtBuf::new();
-    write!(num_buf2,"375").unwrap();
-    assert_eq!(num_buf.buf, num_buf2.buf);
-
-    let num: u16 = 9999;
-    let num_buf = FmtBuf::from(num);
-    let mut num_buf2 = FmtBuf::new();
-    write!(num_buf2,"9999").unwrap();
-    assert_eq!(num_buf.buf, num_buf2.buf);
+    for (int_num, str_num) in test_cases {
+        let num: u16 = *int_num;
+        let num_buf = FmtBuf::from(num);
+        let mut num_buf2 = FmtBuf::new();
+        write!(num_buf2, "{}", str_num).unwrap();
+        assert_eq!(num_buf.buf, num_buf2.buf);
+    }
 }

@@ -100,7 +100,7 @@ fn main() -> ! {
         ("to start", Point::new(0, 32)),
     ];
 
-    for (text,coord) in texts {
+    for (text, coord) in texts {
         Text::with_baseline(text, *coord, char_style, Baseline::Top)
             .draw(&mut display)
             .unwrap();
@@ -138,7 +138,7 @@ fn main() -> ! {
             .unwrap();
 
         display.flush().unwrap();
-            
+
         display.clear();
 
         delay.start(95.milliseconds());
