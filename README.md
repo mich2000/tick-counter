@@ -1,10 +1,13 @@
 # Tick counter
 
-Project allows you to increment and decrement a counter by pressing 2 different small-tact-10 buttons and show it on a ssd1308 display, these are all connected by a raspberry pico. See pictures beneath to see how it looks in real life.
+Project allows you to increment and decrement a counter by pressing 2 different small-tact buttons and show it on a ssd1308 display, these are all connected by a raspberry pico. See pictures beneath to see how it looks in real life.
 
-![Start screen you see when starting the project](start-screen.jpg)
+<img src="start-screen.jpg" alt="Start screen you see when starting the project" height="500" />
+<img src="4-ticks-ongoing.jpg" alt="Screen after ticking the increment button 4 times" height="500" />
 
-![Screen after ticking the increment button 4 times](4-ticks-ongoing.jpg))
+## Raspberry pico reboot
+
+The button next to the raspberry pico has a function to trigger the run pin on the pico. When this is triggered togheter with the pico board button, and released with the pico on-board button as first and then the other one next to the board it will put the pico in boot mode. The pico will be able to be seen as a disk where you can upload your binary on it, in uf2 file format.
 
 ## Contribution
 
