@@ -1,17 +1,18 @@
 #![no_std]
-#![feature(int_log)]
 
 /// This is a very simple buffer to pre format a short line of text
-/// limited arbitrarily to 16 bytes/characters => 128 bits.
+/// limited arbitrarily to 5 bytes/characters => 40 bits.
+/// Reason why it only has 5 bytes, is because it converts u16 integer and
+/// the maximum u16 is 65536(5 bytes needed) to represent
 pub struct FmtBuf {
-    buf: [u8; 16],
+    buf: [u8; 5],
     ptr: usize,
 }
 
 impl FmtBuf {
     pub fn new() -> Self {
         Self {
-            buf: [0; 16],
+            buf: [0; 5],
             ptr: 0,
         }
     }

@@ -11,7 +11,8 @@ impl<B: InputPin> DirectButton<B> {
         Self { input }
     }
 
-    // Method allows us to know if the button is pushed or not. Buttons is an pull-up digital input. If we get an error it will just return an false boolean.
+    // Method allows us to know if the button is pushed or not. Buttons is an pull-up digital input.
+    // If we get an error it will just return an false boolean.
     pub fn pushed(&self) -> bool {
         if let Ok(output) = self.input.is_high() {
             return !output;
